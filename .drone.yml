@@ -1,0 +1,41 @@
+kind: pipeline
+name: default
+
+workspace:
+  path: /home/node/app
+
+steps:
+  - name: build
+    image: node:14
+    volumes:
+      - name: npmcache
+        path: /usr/local/share/.cache/yarn
+    commands:
+      - yarn config set registry https://registry.npmmirror.com
+      - yarn
+      - yarn build
+    environment:
+      CI: false
+      GENERATE_SOURCEMAP: false
+
+  - name: deploy
+    image: node:14
+    volumes:
+      - name: webroot
+        path: /webroot
+    commands:
+      - mkdir -p /webroot/paperplane-app/
+      - rm -rf /webroot/paperplane-app/**/*.*
+      - cp -rf ./build/* /webroot/paperplane-app/
+
+volumes:
+  - name: webroot
+    host:
+      path: /home/ubuntu/www
+  - name: npmcache
+    host:
+      path: /home/ubuntu/npmcache
+
+trigger:
+  branch:
+    - master
