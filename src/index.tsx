@@ -1,11 +1,10 @@
-import zhCNDateFns from 'date-fns/locale/zh-CN'
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-
 import { zhCN } from '@mui/material/locale'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { LocalizationProvider, zhCN as zhCNXDateLocal } from '@mui/x-date-pickers'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import zhCNDateFns from 'date-fns/locale/zh-CN'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 
 import '@/global/app.scss'
 import '@/global/normalize.scss'
