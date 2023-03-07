@@ -19,7 +19,7 @@ steps:
       GENERATE_SOURCEMAP: false
 
   - name: deploy
-    image: node:14
+    image: ubuntu:22.04
     volumes:
       - name: webroot
         path: /webroot
