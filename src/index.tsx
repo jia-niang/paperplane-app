@@ -1,3 +1,4 @@
+import CssBaseline from '@mui/material/CssBaseline'
 import { zhCN } from '@mui/material/locale'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { LocalizationProvider, zhCN as zhCNXDateLocal } from '@mui/x-date-pickers'
@@ -7,7 +8,6 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import '@/global/app.scss'
-import '@/global/normalize.scss'
 
 import RouterEntry from './router'
 
@@ -17,6 +17,7 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
 root.render(
   <React.StrictMode>
+    <CssBaseline />
     <LocalizationProvider
       dateAdapter={AdapterDateFns}
       adapterLocale={zhCNDateFns}
