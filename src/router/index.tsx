@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import Home from '@/pages/Home'
+import Home from '@/pages/homepage'
 
 const router = createBrowserRouter([{ path: '/', element: <Home /> }], {
   basename: process.env.PUBLIC_URL,

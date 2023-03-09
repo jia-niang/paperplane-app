@@ -1,6 +1,6 @@
 import './index.scss'
 
 /** 首页 */
-export default function Home(): RC {
+export default function Homepage(): RC {
   return null
 }
