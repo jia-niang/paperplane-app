@@ -4,8 +4,8 @@
   "private": true,
   "homepage": "https://paperplane.cc/app",
   "dependencies": {
-    "@emotion/core": "^11.0.0",
-    "@emotion/react": "^11.10.4",
+    "@emotion/css": "^11.10.6",
+    "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.4",
     "@loadable/component": "^5.15.3",
     "@mui/core": "^5.0.0-alpha.54",
