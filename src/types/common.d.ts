@@ -1,3 +1,4 @@
+/** 响应体 */
 interface IResponseBody {
   success: boolean
   message: string
