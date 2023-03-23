@@ -35,6 +35,7 @@
     "typescript": "^4.8.4"
   },
   "scripts": {
+    "dev": "yarn start",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "eject": "react-app-rewired eject"
