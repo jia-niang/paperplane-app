@@ -19,6 +19,12 @@ module.exports = {
       camel2DashComponentName: false,
     }),
 
+    fixBabelImports('mui-material', {
+      libraryName: '@mui/material',
+      libraryDirectory: '',
+      camel2DashComponentName: false,
+    }),
+
     fixBabelImports('mui-icon', {
       libraryName: '@mui/icon',
       libraryDirectory: '',
