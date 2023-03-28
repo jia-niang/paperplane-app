@@ -2,14 +2,14 @@ import axios from 'axios'
 
 const client = axios.create({
   baseURL: '/api',
-  timeout: 15000,
+  timeout: 60000,
 })
 
 client.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 
 client.interceptors.response.use(
   function (response) {
-    return response?.data?.data || null
+    return response?.data || null
   },
   function (error) {
     return error?.data || {}

@@ -1,0 +1,14 @@
+.gptchat__answer-md {
+  p>code {
+    background: #f4f4f4;
+    border-radius: 4px;
+    padding: 2px 4px;
+  }
+
+  pre {
+    overflow-x: scroll;
+    border-radius: 8px;
+    padding: 10px 16px;
+    background: #f2f2f3;
+  }
+}

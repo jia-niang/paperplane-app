@@ -7,6 +7,7 @@ import HomePage from '@/pages'
 const ToolsPage = loadable(() => import('@/pages/tools'))
 const DingtalkPage = loadable(() => import('@/pages/tools/dingtalk'))
 const WeeklyPage = loadable(() => import('@/pages/tools/weekly'))
+const GPTChatPage = loadable(() => import('@/pages/tools/gptchat'))
 
 const routerConfig: RouteObject[] = [
   {
@@ -14,14 +15,10 @@ const routerConfig: RouteObject[] = [
     children: [
       { path: '/', element: <HomePage /> },
 
-      {
-        path: '/tools',
-        element: <ToolsPage />,
-        children: [
-          { path: '/tools/dingtalk', element: <DingtalkPage /> },
-          { path: '/tools/weekly', element: <WeeklyPage /> },
-        ],
-      },
+      { path: '/tools', element: <ToolsPage /> },
+      { path: '/tools/dingtalk', element: <DingtalkPage /> },
+      { path: '/tools/weekly', element: <WeeklyPage /> },
+      { path: '/tools/gptchat', element: <GPTChatPage /> },
     ],
   },
 ]
