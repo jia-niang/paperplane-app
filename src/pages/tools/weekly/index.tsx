@@ -7,7 +7,6 @@ import {
   TextField,
   ToggleButton,
   ToggleButtonGroup,
-  Typography,
 } from '@mui/material'
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
@@ -56,7 +55,6 @@ export default function WeeklyPage(): RC {
         >
           <ToggleButton value="normal">普通格式</ToggleButton>
           <ToggleButton value="career">科锐国际格式</ToggleButton>
-          <ToggleButton value="ymtd-fe">医脉前端格式</ToggleButton>
         </ToggleButtonGroup>
       </Grid>
 
@@ -74,9 +72,6 @@ export default function WeeklyPage(): RC {
 
       {result && !isLoading ? (
         <Paper elevation={3} sx={{ padding: 3, marginTop: 3 }}>
-          <Typography align="center" variant="h5" gutterBottom>
-            周报
-          </Typography>
           <ReactMarkdown children={result} />
         </Paper>
       ) : null}
