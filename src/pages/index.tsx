@@ -21,6 +21,24 @@ const toolsList: IProjectInfo[] = [
     link: '/tools/weekly',
     disabled: true,
   },
+  {
+    title: 'Git 助手',
+    desc: '同步和分析 Git 的各个分支和提交记录。',
+    link: '/tools/git',
+    disabled: true,
+  },
+  {
+    title: '医脉同道助手',
+    desc: '查询手机号和 ID、一键注销账号、拉取 IM 记录和会话等功能。',
+    link: '/tools/ymtd',
+    disabled: true,
+  },
+  {
+    title: '短网址',
+    desc: 'paperplane.cc 域名下的短网址功能',
+    link: '/tools/dwz',
+    disabled: true,
+  },
 ]
 
 /** 首页 */
@@ -30,8 +48,10 @@ export default function HomePage(): RC {
       <Typography align="center" variant="h4" gutterBottom>
         工具
       </Typography>
-      <Grid container gap={2} justifyContent="center">
-        {toolsList.map(ProjectCard)}
+      <Grid container gap={2}>
+        {toolsList.map(tool => (
+          <ProjectCard {...tool} key={tool.title} />
+        ))}
       </Grid>
     </Container>
   )
