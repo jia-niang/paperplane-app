@@ -102,10 +102,16 @@
   text-decoration: underline;
 }
 
-code {
-  .hljs-comment {
-    font-family: font-mono-ms;
-    color: #999;
-    font-style: normal;
-  }
+.hljs-comment {
+  font-family: "Source Code Pro", -apple-system, sans-serif;
+  color: #999;
+  font-style: normal;
+}
+
+pre>code {
+  font-family: "Source Code Pro", Consolas, Monaco, Menlo, Consolas, monospace;
+}
+
+p>code {
+  font-family: "Source Code Pro", Consolas, Monaco, Menlo, Consolas, monospace;
 }
