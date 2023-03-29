@@ -10,15 +10,15 @@ const toolsList: IProjectInfo[] = [
     disabled: false,
   },
   {
-    title: '钉钉机器人',
-    desc: '使用钉钉机器人发送消息。',
-    link: '/tools/dingtalk',
-    disabled: true,
-  },
-  {
     title: 'AI 周报生成',
     desc: '提供一段工作描述，让 AI 帮你生成一份周报。',
     link: '/tools/weekly',
+    disabled: false,
+  },
+  {
+    title: '钉钉机器人',
+    desc: '使用钉钉机器人发送消息。',
+    link: '/tools/dingtalk',
     disabled: true,
   },
   {
