@@ -50,7 +50,7 @@ export default function GPTChatPage(): RC {
           variant="contained"
           endIcon={<SendIcon />}
         >
-          {isLoading ? '等待答复……' : '发给 GPT-3'}
+          {isLoading ? '等待答复……' : '发给 GPT-3.5'}
         </Button>
       </Grid>
 

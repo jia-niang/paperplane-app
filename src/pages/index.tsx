@@ -4,8 +4,8 @@ import ProjectCard, { IProjectInfo } from '@/components/cards/ProjectCard'
 
 const toolsList: IProjectInfo[] = [
   {
-    title: 'GPT-3 聊天',
-    desc: '基于 OpenAI 的 GPT-3 模型，提供 AI 对话功能。',
+    title: 'GPT 问答',
+    desc: '基于 OpenAI 的 GPT-3.5 模型，提供 AI 问答功能。',
     link: '/tools/gptchat',
     disabled: false,
   },
