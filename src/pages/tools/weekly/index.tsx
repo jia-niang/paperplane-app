@@ -55,6 +55,7 @@ export default function WeeklyPage(): RC {
         >
           <ToggleButton value="normal">普通格式</ToggleButton>
           <ToggleButton value="career">科锐国际格式</ToggleButton>
+          <ToggleButton value="career-fe">科锐前端格式</ToggleButton>
         </ToggleButtonGroup>
       </Grid>
 
