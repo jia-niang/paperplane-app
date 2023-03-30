@@ -1,6 +1,7 @@
 import { Container, Grid, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
-import ProjectCard, { IProjectInfo } from '@/components/cards/ProjectCard'
+import NormalCard from '@/components/cards/NormalCard'
 
 const toolsList: IProjectInfo[] = [
   {
@@ -40,14 +41,16 @@ const toolsList: IProjectInfo[] = [
 
 /** 首页 */
 export default function HomePage(): RC {
+  const navigate = useNavigate()
+
   return (
     <Container>
-      <Typography align="center" variant="h4" gutterBottom>
-        工具
+      <Typography align="center" variant="h4" sx={{ mb: 4 }}>
+        工具箱
       </Typography>
       <Grid container gap={2}>
         {toolsList.map(tool => (
-          <ProjectCard {...tool} key={tool.title} />
+          <NormalCard {...tool} key={tool.title} onButtonClick={() => void navigate(tool.link)} />
         ))}
       </Grid>
     </Container>

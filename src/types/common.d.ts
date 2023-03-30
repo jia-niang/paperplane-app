@@ -24,19 +24,23 @@ interface IPaginated<TData = any> {
   list: TData[]
 }
 
-type ITimestamp = number
+type TimestampType = number
 
 interface IModifyInfo {
-  createTime: ITimestamp
-  updateTime: ITimestamp
+  createTime: TimestampType
+  updateTime: TimestampType
 }
 
-type IWithModify<T extends object> = T & IModifyInfo
+interface IWithModify extends IModifyInfo {}
 
-type IWithId<T extends object> = T & { id: string }
+interface IWithId {
+  _id: string
+}
 
-type IWithClientId<T extends object> = T & { clientId: string }
+interface IWithClientId {
+  clientId: string
+}
 
-type IEmpty<T extends object> = {
-  [p: keyof T]: typeof T[p] | string
+type EmptyType<T extends object> = {
+  [p: keyof T]: (typeof T)[p] | string
 }

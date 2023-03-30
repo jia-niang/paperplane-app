@@ -5,6 +5,7 @@ const {
   addWebpackAlias,
   fixBabelImports,
   addWebpackModuleRule,
+  addBabelPlugin,
 } = require('customize-cra')
 
 module.exports = {
@@ -15,12 +16,6 @@ module.exports = {
 
     fixBabelImports('mui-core', {
       libraryName: '@mui/core',
-      libraryDirectory: '',
-      camel2DashComponentName: false,
-    }),
-
-    fixBabelImports('mui-material', {
-      libraryName: '@mui/material',
       libraryDirectory: '',
       camel2DashComponentName: false,
     }),
@@ -37,10 +32,12 @@ module.exports = {
       camel2DashComponentName: false,
     }),
 
-    fixBabelImports('lodash', {
-      libraryDirectory: '',
-      camel2DashComponentName: false,
-    }),
+    addBabelPlugin(['lodash']),
+
+    addBabelPlugin([
+      'babel-plugin-direct-import',
+      { modules: ['@mui/material', '@mui/icons-material'] },
+    ]),
 
     addWebpackModuleRule({
       test: /\.scss$/,

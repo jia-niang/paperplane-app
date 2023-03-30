@@ -7,16 +7,16 @@ import zhCNDateFns from 'date-fns/locale/zh-CN'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-import '@/global/app.scss'
-
 import RouterEntry from './router'
+
+import '@/global/app.scss'
 
 const theme = createTheme(zhCN)
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
 root.render(
-  <React.StrictMode>
+  <React.Fragment>
     <CssBaseline />
     <LocalizationProvider
       dateAdapter={AdapterDateFns}
@@ -27,5 +27,5 @@ root.render(
         <RouterEntry />
       </ThemeProvider>
     </LocalizationProvider>
-  </React.StrictMode>
+  </React.Fragment>
 )

@@ -5,7 +5,9 @@ import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 
 import { gptChatApi } from '@/apis/ai'
+
 import '@/global/highlight.scss'
+import '@/global/source-code-pro.scss'
 
 import './index.scss'
 

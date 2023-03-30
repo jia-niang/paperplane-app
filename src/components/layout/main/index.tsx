@@ -48,7 +48,7 @@ export default function MainLayout(): RC {
 
       <Divider style={{ marginTop: 24 }}></Divider>
 
-      <Box margin={2} marginTop={4}>
+      <Box mt={4} mb={4}>
         <Outlet />
       </Box>
     </Container>

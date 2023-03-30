@@ -1,19 +1,15 @@
 import { Button, Card, CardActions, CardContent, Typography } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { noop } from 'lodash'
 
-export interface IProjectInfo {
+export interface INormalCardProps extends IProps {
   title: string
-  desc: string
-  link: string
+  desc?: string
   disabled?: boolean
+  onButtonClick?(): void
 }
 
-export interface IProjectCardProps extends IProjectInfo, IProps {}
-
-export default function ProjectCard(props: IProjectCardProps): RC {
-  const { title, desc, link, disabled } = props
-
-  const navigate = useNavigate()
+export default function NormalCard(props: INormalCardProps): RC {
+  const { title, desc, disabled, onButtonClick = noop } = props
 
   return (
     <Card variant="outlined" sx={{ width: 250, position: 'relative', paddingBottom: '48px' }}>
@@ -26,7 +22,7 @@ export default function ProjectCard(props: IProjectCardProps): RC {
         </Typography>
       </CardContent>
       <CardActions sx={{ position: 'absolute', bottom: 0 }}>
-        <Button disabled={disabled} onClick={() => void navigate(link)} size="small">
+        <Button disabled={disabled} onClick={onButtonClick} size="small">
           {disabled ? '不可用' : '前往'}
         </Button>
       </CardActions>

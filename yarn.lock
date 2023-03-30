@@ -2320,9 +2320,9 @@
     "@types/react" "*"
 
 "@types/lodash@^4.14.186":
-  version "4.14.191"
-  resolved "https://registry.npmmirror.com/@types/lodash/-/lodash-4.14.191.tgz#09511e7f7cba275acd8b419ddac8da9a6a79e2fa"
-  integrity sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==
+  version "4.14.192"
+  resolved "https://registry.npmmirror.com/@types/lodash/-/lodash-4.14.192.tgz#5790406361a2852d332d41635d927f1600811285"
+  integrity sha512-km+Vyn3BYm5ytMO13k9KTp27O75rbQ0NFw+U//g+PX7VZyjCioXaRFisqSIJRECljcTv73G3i6BpglNGHgUQ5A==
 
 "@types/mdast@^3.0.0":
   version "3.0.11"
@@ -3142,6 +3142,13 @@ babel-loader@^8.2.3:
     loader-utils "^2.0.0"
     make-dir "^3.1.0"
     schema-utils "^2.6.5"
+
+babel-plugin-direct-import@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmmirror.com/babel-plugin-direct-import/-/babel-plugin-direct-import-1.0.0.tgz#d31eee76b1c359e89f253be10f0a2bbbd1047347"
+  integrity sha512-WQCA5RJz/VVKHoxNKMrXc5YdsWw2d3vN2vrfKMdHLzf3+YROzKtlcZFhRjYx82nd30ijtWD4cxhV7RssUpCfjw==
+  dependencies:
+    resolve "^1.20.0"
 
 babel-plugin-emotion@^11.0.0:
   version "11.0.0"
