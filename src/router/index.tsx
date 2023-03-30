@@ -8,6 +8,7 @@ const ToolsPage = loadable(() => import('@/pages/tools'))
 const DingtalkPage = loadable(() => import('@/pages/tools/dingtalk'))
 const WeeklyPage = loadable(() => import('@/pages/tools/weekly'))
 const GPTChatPage = loadable(() => import('@/pages/tools/gptchat'))
+const GitPage = loadable(() => import('@/pages/tools/git'))
 
 const routerConfig: RouteObject[] = [
   {
@@ -19,6 +20,7 @@ const routerConfig: RouteObject[] = [
       { path: '/tools/dingtalk', element: <DingtalkPage /> },
       { path: '/tools/weekly', element: <WeeklyPage /> },
       { path: '/tools/gptchat', element: <GPTChatPage /> },
+      { path: '/tools/git', element: <GitPage /> },
     ],
   },
 ]
