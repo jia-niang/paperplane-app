@@ -192,7 +192,7 @@ export default function GitPage(): RC {
               {staffsWithWeekly.map(staff => (
                 <Paper elevation={3} sx={{ padding: 3, marginTop: 3 }}>
                   <Typography align="center" variant="h4">
-                    用户 {staff.name} 的周报
+                    {staff.name} 的{project.name}周报
                   </Typography>
                   <Typography variant="body1">
                     <ReactMarkdown children={staff.weeklyText || ''}></ReactMarkdown>
