@@ -16,10 +16,22 @@ export async function addGitRepoApi(projectName: string, url: string): Promise<I
   return client.post(`/git-helper/project/${projectName}/repo`, { url })
 }
 
+export async function deleteGitRepoApi(projectName: string, repoName: string) {
+  return client.delete(`/git-helper/project/${projectName}/repo/${repoName}`)
+}
+
+export async function syncRepoApi(projectName: string, repoName: string) {
+  return client.post(`/git-helper/project/${projectName}/repo/${repoName}/sync`)
+}
+
 export async function addGitStaffApi(projectName: string, staff: IGitStaff): Promise<IGitStaff> {
   return client.post(`/git-helper/project/${projectName}/staff`, { staff })
 }
 
-export async function syncRepoApi(projectName: string, repoName: string): Promise<string[]> {
-  return client.post(`/git-helper/project/${projectName}/repo/${repoName}/sync`)
+export async function deleteGitStaffApi(projectName: string, staffName: string) {
+  return client.delete(`/git-helper/project/${projectName}/staff/${staffName}`)
+}
+
+export async function generateGitWeeklyApi(projectName: string): Promise<Record<string, string>> {
+  return client.post(`/git-helper/project/${projectName}/git-weekly`)
 }

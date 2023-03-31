@@ -1,18 +1,25 @@
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import EditIcon from '@mui/icons-material/Edit'
-import SyncIcon from '@mui/icons-material/Sync'
+import DeleteIcon from '@mui/icons-material/Delete'
 import { Card, CardActions, CardContent, CardHeader, IconButton } from '@mui/material'
+import { useState } from 'react'
+
+import { deleteGitStaffApi } from '@/apis/git'
+import ConfirmDialog from '@/components/dialogs/ConfirmDialog'
 
 const emptyArray: any[] = []
 
-export interface IGitStaffCardProps extends IGitStaff {}
+export interface IGitStaffCardProps extends IGitStaff {
+  project: IGitProject
+  onMutate?(): void
+}
 
 export default function GitStaffCard(props: IGitStaffCardProps): RC {
-  const { name, emails = emptyArray, alternativeNames = emptyArray } = props
+  const { name, emails = emptyArray, alternativeNames = emptyArray, project, onMutate } = props
 
-  const editHandler = () => {}
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
-  const deleteHandler = () => {}
+  const confirmDeleteHandler = () => {
+    deleteGitStaffApi(project.name, name).then(() => void onMutate?.())
+  }
 
   return (
     <Card sx={{ display: 'block' }}>
@@ -33,14 +40,17 @@ export default function GitStaffCard(props: IGitStaffCardProps): RC {
       ) : null}
 
       <CardActions disableSpacing>
-        <IconButton onClick={editHandler}>
-          <EditIcon />
-        </IconButton>
-
-        <IconButton onClick={deleteHandler}>
-          <DeleteForeverIcon />
+        <IconButton onClick={() => void setIsDeleteDialogOpen(true)}>
+          <DeleteIcon />
         </IconButton>
       </CardActions>
+
+      <ConfirmDialog
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+        title={`确定要删除用户 ${name} 吗？`}
+        onSubmit={confirmDeleteHandler}
+      />
     </Card>
   )
 }

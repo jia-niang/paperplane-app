@@ -38,8 +38,8 @@ export default function GitStaffDialog(props: IGitStaffDialogProps) {
       <DialogTitle>关联用户</DialogTitle>
 
       <DialogContent>
-        <DialogContentText>
-          请填写曾在仓库中用到的所有用户名和邮箱，如果遗漏了可能会导致统计缺失
+        <DialogContentText gutterBottom>
+          请填写曾在仓库中用到的所有用户名和邮箱，如果遗漏了可能会导致统计缺失。输入时无需区分大小写。
         </DialogContentText>
 
         <TextField

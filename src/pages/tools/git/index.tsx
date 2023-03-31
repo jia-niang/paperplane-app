@@ -12,7 +12,8 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import useSWR from 'swr'
 
 import {
   addGitRepoApi,
@@ -20,6 +21,7 @@ import {
   fetchSSHKeyApi,
   listAllProjectApi,
   addGitStaffApi,
+  generateGitWeeklyApi,
 } from '@/apis/git'
 import InputDialog from '@/components/dialogs/InputDialog'
 
@@ -29,60 +31,52 @@ import GitStaffDialog from './GitStaffDialog'
 
 import '@/global/source-code-pro.scss'
 
+const emptyObject: any = {}
+
 /** Git 助手页面 */
 export default function GitPage(): RC {
-  const [isLoading, setIsLoading] = useState(false)
-
   const [sshKey, setSshKey] = useState('')
-
-  const [projectList, setProjectList] = useState<IGitProject[]>([])
-  const [project, setProject] = useState<IGitProject>()
 
   const [isProjDialogOpen, setIsProjDialogOpen] = useState(false)
   const [isRepoDialogOpen, setIsRepoDialogOpen] = useState(false)
   const [isStaffDialogOpen, setIsStaffDialogOpen] = useState(false)
 
+  const [gitWeekly, setGitWeekly] = useState<Record<string, string>>(emptyObject)
+
+  const {
+    data: projectList,
+    isLoading,
+    mutate,
+  } = useSWR('/git-helper/project', listAllProjectApi, { refreshInterval: 2000 })
+
+  const [currentProjectId, setCurrentProjectId] = useState<string>()
+  const project = useMemo(
+    () => projectList?.find(item => item._id === currentProjectId),
+    [currentProjectId, projectList]
+  )
+
   useEffect(() => {
-    setIsLoading(true)
-
-    Promise.allSettled([
-      listAllProjectApi().then(res => {
-        setProjectList(res)
-        setProject(res[0])
-      }),
-
-      fetchSSHKeyApi().then(setSshKey),
-    ]).finally(() => void setIsLoading(false))
+    fetchSSHKeyApi().then(setSshKey)
   }, [])
 
+  useEffect(() => void console.log(projectList), [projectList])
+
   const addProjectHandler = (name: string) => {
-    setIsLoading(true)
-    addGitProjectApi(name)
-      .then(res => {
-        setProjectList(list => [...list, res])
-        setProject(res)
-      })
-      .finally(() => void setIsLoading(false))
+    addGitProjectApi(name).then(res => {
+      mutate().then(() => void setCurrentProjectId(res.name))
+    })
   }
 
   const addRepoHandler = (url: string) => {
-    setIsLoading(true)
-    addGitRepoApi(project!.name, url)
-      .then(res => {
-        const repos = [...project!.repos, res]
-        setProject(p => ({ ...p!, repos }))
-      })
-      .finally(() => void setIsLoading(false))
+    addGitRepoApi(project!.name, url).then(() => void mutate())
   }
 
   const addStaffHandler = (gitStaff: IGitStaff) => {
-    setIsLoading(true)
-    addGitStaffApi(project!.name, gitStaff)
-      .then(res => {
-        const staffs = [...project!.staffs, res]
-        setProject(p => ({ ...p!, staffs }))
-      })
-      .finally(() => void setIsLoading(false))
+    addGitStaffApi(project!.name, gitStaff).then(() => void mutate())
+  }
+
+  const makeWeeklyHandler = () => {
+    generateGitWeeklyApi(project!.name).then(setGitWeekly)
   }
 
   return (
@@ -100,10 +94,10 @@ export default function GitPage(): RC {
                 labelId="git-project-picker"
                 value={project?._id || ''}
                 label="选择项目"
-                onChange={e => void setProject(projectList.find(t => t._id === e.target.value))}
+                onChange={e => void setCurrentProjectId(e.target.value)}
                 required
               >
-                {projectList.map(project => (
+                {projectList?.map(project => (
                   <MenuItem key={project._id} value={project._id}>
                     {project.name}
                   </MenuItem>
@@ -129,6 +123,22 @@ export default function GitPage(): RC {
       {project ? (
         <Stack columnGap={2} rowGap={4} sx={{ mt: 4 }}>
           <Typography align="center" variant="h4">
+            添加 SSH 公钥
+          </Typography>
+
+          <Paper sx={{ p: 2 }} elevation={1}>
+            <Typography
+              variant="body2"
+              sx={{
+                wordBreak: 'break-all',
+                fontFamily: `"Source Code Pro", -apple-system, sans-serif`,
+              }}
+            >
+              {sshKey}
+            </Typography>
+          </Paper>
+
+          <Typography align="center" variant="h4">
             关联 Git 和用户
           </Typography>
 
@@ -136,7 +146,12 @@ export default function GitPage(): RC {
             <Grid item md={6} sm={12} xs={12}>
               <Stack justifyContent="center" rowGap={1}>
                 {project.repos.map(repo => (
-                  <GitRepoCard {...repo} project={project} key={repo.url} />
+                  <GitRepoCard
+                    {...repo}
+                    project={project}
+                    onMutate={mutate}
+                    key={`${repo.url}#${repo.status}`}
+                  />
                 ))}
 
                 <Button
@@ -154,7 +169,7 @@ export default function GitPage(): RC {
             <Grid item md={6} sm={12} xs={12}>
               <Stack justifyContent="center" rowGap={1}>
                 {project.staffs.map(staff => (
-                  <GitStaffCard {...staff} key={staff.name} />
+                  <GitStaffCard {...staff} project={project} onMutate={mutate} key={staff.name} />
                 ))}
 
                 <Button
@@ -171,20 +186,27 @@ export default function GitPage(): RC {
           </Grid>
 
           <Typography align="center" variant="h4">
-            添加 SSH 公钥
+            智能周报
           </Typography>
 
-          <Paper sx={{ p: 2 }} elevation={1}>
-            <Typography
-              variant="body2"
-              sx={{
-                wordBreak: 'break-all',
-                fontFamily: `"Source Code Pro", -apple-system, sans-serif`,
-              }}
-            >
-              {sshKey}
-            </Typography>
-          </Paper>
+          {gitWeekly === emptyObject ? (
+            <Grid item justifyContent="center">
+              <Button onClick={makeWeeklyHandler} variant="contained" fullWidth>
+                点我生成
+              </Button>
+            </Grid>
+          ) : (
+            project?.staffs.map(staff => (
+              <>
+                <Typography align="center" variant="h6" key={staff.name + '-title'}>
+                  {staff.name}
+                </Typography>
+                <Typography align="center" variant="body2" key={staff.name + 'body'}>
+                  {gitWeekly[staff.name]}
+                </Typography>
+              </>
+            ))
+          )}
         </Stack>
       ) : null}
 

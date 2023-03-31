@@ -1,5 +1,4 @@
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import SyncIcon from '@mui/icons-material/Sync'
 import {
@@ -16,7 +15,8 @@ import {
 import { format } from 'date-fns'
 import { useState } from 'react'
 
-import { syncRepoApi } from '@/apis/git'
+import { deleteGitRepoApi, syncRepoApi } from '@/apis/git'
+import ConfirmDialog from '@/components/dialogs/ConfirmDialog'
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean
@@ -35,42 +35,41 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 export interface IGitRepoCardProps extends IGitRepo, IProps {
   project: IGitProject
+  onMutate?(): void
 }
 
 export default function GitRepoCard(props: IGitRepoCardProps): RC {
-  const { name, status, lastSyncTs, recentBranches, project } = props
-  const [isLoading, setIsLoading] = useState(false)
-  const [isExpanded, setIsExpanded] = useState(false)
+  const { name, status, lastSyncTs, recentBranches, project, onMutate } = props
 
-  const [branches, setBranches] = useState<string[]>(recentBranches)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(() => recentBranches.length > 0)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
   const isLocked = isLoading || status === 'pending'
 
   const syncHandler = () => {
     setIsLoading(true)
-    syncRepoApi(project.name, name)
-      .then(res => {
-        setBranches(res)
-        setIsExpanded(true)
-      })
-      .finally(() => void setIsLoading(false))
+    syncRepoApi(project.name, name).then(() => void onMutate?.())
   }
 
-  const editHandler = () => {}
-
-  const deleteHandler = () => {}
+  const confirmDeleteHandler = () => {
+    setIsLoading(true)
+    deleteGitRepoApi(project.name, name)
+      .then(() => void onMutate?.())
+      .finally(() => void setIsLoading(false))
+  }
 
   return (
     <Card sx={{ display: 'block' }}>
       <CardHeader
         title={name}
         subheader={
-          status === 'init' && isLoading
-            ? '首次克隆中……'
+          status === 'error'
+            ? '同步出错'
             : status === 'pending' || isLoading
             ? '同步中……'
             : lastSyncTs
-            ? `上次同步：${format(new Date(lastSyncTs), 'yyyy年 MM月 dd日')}`
+            ? `上次同步：${format(new Date(lastSyncTs), 'yyyy年 MM月 dd日 HH:mm')}`
             : '未曾同步'
         }
       />
@@ -79,12 +78,8 @@ export default function GitRepoCard(props: IGitRepoCardProps): RC {
           <SyncIcon />
         </IconButton>
 
-        <IconButton disabled={isLocked} onClick={editHandler}>
-          <EditIcon />
-        </IconButton>
-
-        <IconButton disabled={isLocked} onClick={deleteHandler}>
-          <DeleteForeverIcon />
+        <IconButton disabled={isLocked} onClick={() => void setIsDeleteDialogOpen(true)}>
+          <DeleteIcon />
         </IconButton>
 
         {recentBranches.length <= 0 ? null : (
@@ -101,9 +96,16 @@ export default function GitRepoCard(props: IGitRepoCardProps): RC {
       <Collapse in={isExpanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>近期提交过的分支：</Typography>
-          <Typography sx={{ whiteSpace: 'pre-wrap' }}>{branches.join('\n')}</Typography>
+          <Typography sx={{ whiteSpace: 'pre-wrap' }}>{recentBranches.join('\n')}</Typography>
         </CardContent>
       </Collapse>
+
+      <ConfirmDialog
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+        title={`确定要删除分支 ${name} 吗？`}
+        onSubmit={confirmDeleteHandler}
+      />
     </Card>
   )
 }

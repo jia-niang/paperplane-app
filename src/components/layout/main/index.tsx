@@ -10,7 +10,7 @@ export default function MainLayout(): RC {
     <Container maxWidth="lg" className="tools-layout">
       <Grid height={80} container direction="row" justifyContent="center" alignItems="center">
         <Typography onClick={() => void navigate('/')} style={{ cursor: 'pointer' }} variant="h4">
-          Paperplane WebApp
+          Paperplane 🌠 Web App
         </Typography>
       </Grid>
 

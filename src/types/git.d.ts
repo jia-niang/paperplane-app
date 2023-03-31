@@ -7,12 +7,22 @@
  */
 type GitRepoStatusType = 'init' | 'ready' | 'pending' | 'error'
 
+interface IGitCommit {
+  hash: string
+  date: string
+  message: string
+  author_name: string
+  author_email: string
+  refs?: string
+}
+
 interface IGitRepo {
   name: string
   url: string
   status: GitRepoStatusType
   lastSyncTs: TimestampType
   recentBranches: string[]
+  recentCommits: IGitCommit[]
 }
 
 interface IGitStaff {
