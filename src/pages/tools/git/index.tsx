@@ -12,14 +12,13 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import useSWR from 'swr'
 
 import {
   addGitRepoApi,
   addGitProjectApi,
-  fetchSSHKeyApi,
   listAllProjectApi,
   addGitStaffApi,
   generateGitWeeklyApi,
@@ -29,20 +28,15 @@ import InputDialog from '@/components/dialogs/InputDialog'
 import GitRepoCard from './GitRepoCard'
 import GitStaffCard from './GitStaffCard'
 import GitStaffDialog from './GitStaffDialog'
+import SSHKey from './SSHKey'
 
 import '@/global/source-code-pro.scss'
 
-const emptyObject: any = {}
-
 /** Git 助手页面 */
 export default function GitPage(): RC {
-  const [sshKey, setSshKey] = useState('')
-
   const [isProjDialogOpen, setIsProjDialogOpen] = useState(false)
   const [isRepoDialogOpen, setIsRepoDialogOpen] = useState(false)
   const [isStaffDialogOpen, setIsStaffDialogOpen] = useState(false)
-
-  const [gitWeekly, setGitWeekly] = useState<Record<string, string>>(emptyObject)
 
   const {
     data: projectList,
@@ -56,11 +50,17 @@ export default function GitPage(): RC {
     [currentProjectId, projectList]
   )
 
-  useEffect(() => {
-    fetchSSHKeyApi().then(setSshKey)
-  }, [])
+  const staffsWithWeekly = useMemo(
+    () => project?.staffs?.filter(staff => staff.weeklyText) ?? [],
+    [project?.staffs]
+  )
 
-  useEffect(() => void console.log(projectList), [projectList])
+  const isWeeklyButtonReady = useMemo(
+    () =>
+      project?.weeklyStatus !== 'pending' &&
+      project?.repos.every(repo => repo.status !== 'pending'),
+    [project?.repos, project?.weeklyStatus]
+  )
 
   const addProjectHandler = (name: string) => {
     addGitProjectApi(name).then(res => {
@@ -77,7 +77,7 @@ export default function GitPage(): RC {
   }
 
   const makeWeeklyHandler = () => {
-    generateGitWeeklyApi(project!.name).then(setGitWeekly)
+    generateGitWeeklyApi(project!.name).then(() => void mutate())
   }
 
   return (
@@ -123,21 +123,7 @@ export default function GitPage(): RC {
 
       {project ? (
         <Stack columnGap={2} rowGap={4} sx={{ mt: 4 }}>
-          <Typography align="center" variant="h4">
-            添加 SSH 公钥
-          </Typography>
-
-          <Paper sx={{ p: 2 }} elevation={1}>
-            <Typography
-              variant="body2"
-              sx={{
-                wordBreak: 'break-all',
-                fontFamily: `"Source Code Pro", -apple-system, sans-serif`,
-              }}
-            >
-              {sshKey}
-            </Typography>
-          </Paper>
+          <SSHKey />
 
           <Typography align="center" variant="h4">
             关联 Git 和用户
@@ -190,24 +176,31 @@ export default function GitPage(): RC {
             智能周报
           </Typography>
 
-          {gitWeekly === emptyObject ? (
-            <Grid item justifyContent="center">
-              <Button onClick={makeWeeklyHandler} variant="contained" fullWidth>
-                点我生成
-              </Button>
-            </Grid>
-          ) : (
-            project?.staffs.map(staff => (
-              <>
-                <Typography align="center" variant="h6" key={staff.name + '-title'}>
-                  {staff.name}
-                </Typography>
-                <Typography variant="body2" key={staff.name + 'body'}>
-                  <ReactMarkdown children={gitWeekly[staff.name]}></ReactMarkdown>
-                </Typography>
-              </>
-            ))
-          )}
+          <Grid item justifyContent="center">
+            <Button
+              disabled={!isWeeklyButtonReady}
+              onClick={makeWeeklyHandler}
+              variant="contained"
+              fullWidth
+            >
+              点我生成
+            </Button>
+          </Grid>
+
+          {staffsWithWeekly.length > 0 ? (
+            <Stack rowGap={2}>
+              {staffsWithWeekly.map(staff => (
+                <Paper elevation={3} sx={{ padding: 3, marginTop: 3 }}>
+                  <Typography align="center" variant="h4">
+                    用户 {staff.name} 的周报
+                  </Typography>
+                  <Typography variant="body1">
+                    <ReactMarkdown children={staff.weeklyText || ''}></ReactMarkdown>
+                  </Typography>
+                </Paper>
+              ))}
+            </Stack>
+          ) : null}
         </Stack>
       ) : null}
 

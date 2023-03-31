@@ -32,6 +32,6 @@ export async function deleteGitStaffApi(projectName: string, staffName: string) 
   return client.delete(`/git-helper/project/${projectName}/staff/${staffName}`)
 }
 
-export async function generateGitWeeklyApi(projectName: string): Promise<Record<string, string>> {
+export async function generateGitWeeklyApi(projectName: string) {
   return client.post(`/git-helper/project/${projectName}/git-weekly`)
 }

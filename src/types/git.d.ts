@@ -29,10 +29,12 @@ interface IGitStaff {
   name: string
   emails: string[]
   alternativeNames: string[]
+  weeklyText?: string
 }
 
 interface IGitProject extends IWithId {
   name: string
   repos: IGitRepo[]
   staffs: IGitStaff[]
+  weeklyStatus: GitRepoStatusType
 }
