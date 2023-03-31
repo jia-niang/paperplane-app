@@ -202,8 +202,8 @@ export default function GitPage(): RC {
                 <Typography align="center" variant="h6" key={staff.name + '-title'}>
                   {staff.name}
                 </Typography>
-                <Typography align="center" variant="body2" key={staff.name + 'body'}>
-                  <ReactMarkdown>{gitWeekly[staff.name]}</ReactMarkdown>
+                <Typography variant="body2" key={staff.name + 'body'}>
+                  <ReactMarkdown children={gitWeekly[staff.name]}></ReactMarkdown>
                 </Typography>
               </>
             ))
