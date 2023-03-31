@@ -13,6 +13,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
 import useSWR from 'swr'
 
 import {
@@ -202,7 +203,7 @@ export default function GitPage(): RC {
                   {staff.name}
                 </Typography>
                 <Typography align="center" variant="body2" key={staff.name + 'body'}>
-                  {gitWeekly[staff.name]}
+                  <ReactMarkdown>{gitWeekly[staff.name]}</ReactMarkdown>
                 </Typography>
               </>
             ))
