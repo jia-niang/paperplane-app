@@ -37,4 +37,5 @@ interface IGitProject extends IWithId {
   repos: IGitRepo[]
   staffs: IGitStaff[]
   weeklyStatus: GitRepoStatusType
+  publicKey: string
 }

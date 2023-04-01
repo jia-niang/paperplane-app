@@ -1,15 +1,10 @@
 import { Paper, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
 
-import { fetchSSHKeyApi } from '@/apis/git'
+export interface ISSHKeyProps {
+  sshKey?: string
+}
 
-export default function SSHKey(): RC {
-  const [sshKey, setSshKey] = useState('')
-
-  useEffect(() => {
-    fetchSSHKeyApi().then(setSshKey)
-  }, [])
-
+export default function SSHKey(props: ISSHKeyProps): RC {
   return (
     <>
       <Typography align="center" variant="h4">
@@ -24,7 +19,7 @@ export default function SSHKey(): RC {
             fontFamily: `"Source Code Pro", -apple-system, sans-serif`,
           }}
         >
-          {sshKey}
+          {props.sshKey}
         </Typography>
       </Paper>
     </>

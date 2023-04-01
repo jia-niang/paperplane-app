@@ -123,7 +123,7 @@ export default function GitPage(): RC {
 
       {project ? (
         <Stack columnGap={2} rowGap={4} sx={{ mt: 4 }}>
-          <SSHKey />
+          <SSHKey sshKey={project.publicKey} />
 
           <Typography align="center" variant="h4">
             关联 Git 和用户
