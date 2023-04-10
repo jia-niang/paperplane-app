@@ -35,3 +35,7 @@ export async function deleteGitStaffApi(projectName: string, staffName: string) 
 export async function generateGitWeeklyApi(projectName: string) {
   return client.post(`/git-helper/project/${projectName}/git-weekly`)
 }
+
+export async function generateGitWeeklyByStaffNameApi(projectName: string, staffName: string) {
+  return client.post(`/git-helper/project/${projectName}/staff/${staffName}/git-weekly`)
+}

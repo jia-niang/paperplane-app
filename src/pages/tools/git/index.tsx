@@ -22,6 +22,7 @@ import {
   listAllProjectApi,
   addGitStaffApi,
   generateGitWeeklyApi,
+  generateGitWeeklyByStaffNameApi,
 } from '@/apis/git'
 import InputDialog from '@/components/dialogs/InputDialog'
 
@@ -78,6 +79,10 @@ export default function GitPage(): RC {
 
   const makeWeeklyHandler = () => {
     generateGitWeeklyApi(project!.name).then(() => void mutate())
+  }
+
+  const resetWeeklyReportHandler = (staffName: string) => {
+    generateGitWeeklyByStaffNameApi(project!.name, staffName).then(() => void mutate())
   }
 
   return (
@@ -194,6 +199,13 @@ export default function GitPage(): RC {
                   <Typography align="center" variant="h4">
                     {staff.name} 的{project.name}周报
                   </Typography>
+                  <Button
+                    disabled={!isWeeklyButtonReady}
+                    onClick={() => resetWeeklyReportHandler(staff.name)}
+                    variant="contained"
+                  >
+                    重新生成
+                  </Button>
                   <Typography variant="body1">
                     <ReactMarkdown children={staff.weeklyText || ''}></ReactMarkdown>
                   </Typography>
