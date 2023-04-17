@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 
 const axiosDefaultConfig = {
   baseURL: process.env.REACT_APP_API_BASE_URL,
-  timeout: 60000,
+  timeout: 120 * 1000,
 }
 
 const rawClient = axios.create(axiosDefaultConfig)
