@@ -39,7 +39,7 @@ export interface IGitRepoCardProps extends IGitRepo, IProps {
 }
 
 export default function GitRepoCard(props: IGitRepoCardProps): RC {
-  const { name, status, lastSyncTs, recentBranches, project, onMutate } = props
+  const { _id, name, status, lastSyncTs, recentBranches, project, onMutate } = props
 
   const [isLoading, setIsLoading] = useState(false)
   const [isExpanded, setIsExpanded] = useState(() => recentBranches.length > 0)
@@ -49,12 +49,12 @@ export default function GitRepoCard(props: IGitRepoCardProps): RC {
 
   const syncHandler = () => {
     setIsLoading(true)
-    syncRepoApi(project.name, name).then(() => void onMutate?.())
+    syncRepoApi(project._id, _id).then(() => void onMutate?.())
   }
 
   const confirmDeleteHandler = () => {
     setIsLoading(true)
-    deleteGitRepoApi(project.name, name)
+    deleteGitRepoApi(project._id, _id)
       .then(() => void onMutate?.())
       .finally(() => void setIsLoading(false))
   }
@@ -103,7 +103,7 @@ export default function GitRepoCard(props: IGitRepoCardProps): RC {
       <ConfirmDialog
         open={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
-        title={`确定要删除分支 ${name} 吗？`}
+        title={`确定要删除仓库 ${name} 吗？`}
         onSubmit={confirmDeleteHandler}
       />
     </Card>

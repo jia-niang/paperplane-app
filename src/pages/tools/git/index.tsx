@@ -22,7 +22,8 @@ import {
   listAllProjectApi,
   addGitStaffApi,
   generateGitWeeklyApi,
-  generateGitWeeklyByStaffNameApi,
+  generateGitWeeklyByStaffApi,
+  fetchGitProjectApi,
 } from '@/apis/git'
 import InputDialog from '@/components/dialogs/InputDialog'
 
@@ -39,16 +40,29 @@ export default function GitPage(): RC {
   const [isRepoDialogOpen, setIsRepoDialogOpen] = useState(false)
   const [isStaffDialogOpen, setIsStaffDialogOpen] = useState(false)
 
+  const [currentProjectId, setCurrentProjectId] = useState<string>()
+
+  const { data: projectList, mutate: refreshProjectList } = useSWR(
+    '/git-helper/project',
+    listAllProjectApi
+  )
   const {
-    data: projectList,
+    data: project,
     isLoading,
     mutate,
-  } = useSWR('/git-helper/project', listAllProjectApi, { refreshInterval: 2000 })
+  } = useSWR(
+    currentProjectId ? `/git-helper/project/${currentProjectId}` : null,
+    () => fetchGitProjectApi(currentProjectId!),
+    {
+      refreshInterval: newProject => {
+        const shouldPoll =
+          newProject &&
+          (newProject.weeklyStatus === 'pending' ||
+            newProject?.repos.some(repo => repo.status === 'pending'))
 
-  const [currentProjectId, setCurrentProjectId] = useState<string>()
-  const project = useMemo(
-    () => projectList?.find(item => item._id === currentProjectId),
-    [currentProjectId, projectList]
+        return shouldPoll ? 2000 : 0
+      },
+    }
   )
 
   const staffsWithWeekly = useMemo(
@@ -64,25 +78,25 @@ export default function GitPage(): RC {
   )
 
   const addProjectHandler = (name: string) => {
-    addGitProjectApi(name).then(res => {
-      mutate().then(() => void setCurrentProjectId(res.name))
+    addGitProjectApi({ name }).then(res => {
+      mutate().then(() => void setCurrentProjectId(res._id))
     })
   }
 
   const addRepoHandler = (url: string) => {
-    addGitRepoApi(project!.name, url).then(() => void mutate())
+    addGitRepoApi(project!._id, { url }).then(() => void mutate())
   }
 
   const addStaffHandler = (gitStaff: IGitStaff) => {
-    addGitStaffApi(project!.name, gitStaff).then(() => void mutate())
+    addGitStaffApi(project!._id, gitStaff).then(() => void mutate())
   }
 
   const makeWeeklyHandler = () => {
-    generateGitWeeklyApi(project!.name).then(() => void mutate())
+    generateGitWeeklyApi(project!._id).then(() => void mutate())
   }
 
-  const resetWeeklyReportHandler = (staffName: string) => {
-    generateGitWeeklyByStaffNameApi(project!.name, staffName).then(() => void mutate())
+  const resetWeeklyReportHandler = (staffId: string) => {
+    generateGitWeeklyByStaffApi(project!._id, staffId).then(() => void mutate())
   }
 
   return (
@@ -101,6 +115,7 @@ export default function GitPage(): RC {
                 value={project?._id || ''}
                 label="选择项目"
                 onChange={e => void setCurrentProjectId(e.target.value)}
+                onOpen={() => void refreshProjectList()}
                 required
               >
                 {projectList?.map(project => (
@@ -142,7 +157,7 @@ export default function GitPage(): RC {
                     {...repo}
                     project={project}
                     onMutate={mutate}
-                    key={`${repo.url}#${repo.status}`}
+                    key={repo._id + '#' + repo.status}
                   />
                 ))}
 
@@ -161,7 +176,7 @@ export default function GitPage(): RC {
             <Grid item md={6} sm={12} xs={12}>
               <Stack justifyContent="center" rowGap={1}>
                 {project.staffs.map(staff => (
-                  <GitStaffCard {...staff} project={project} onMutate={mutate} key={staff.name} />
+                  <GitStaffCard {...staff} project={project} onMutate={mutate} key={staff._id} />
                 ))}
 
                 <Button
@@ -195,13 +210,13 @@ export default function GitPage(): RC {
           {staffsWithWeekly.length > 0 ? (
             <Stack rowGap={2}>
               {staffsWithWeekly.map(staff => (
-                <Paper elevation={3} sx={{ padding: 3, marginTop: 3 }}>
+                <Paper elevation={3} sx={{ padding: 3, marginTop: 3 }} key={staff._id}>
                   <Typography align="center" variant="h4">
                     {staff.name} 的{project.name}周报
                   </Typography>
                   <Button
                     disabled={!isWeeklyButtonReady}
-                    onClick={() => resetWeeklyReportHandler(staff.name)}
+                    onClick={() => resetWeeklyReportHandler(staff._id)}
                     variant="contained"
                   >
                     重新生成

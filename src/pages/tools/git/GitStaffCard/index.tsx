@@ -13,12 +13,12 @@ export interface IGitStaffCardProps extends IGitStaff {
 }
 
 export default function GitStaffCard(props: IGitStaffCardProps): RC {
-  const { name, emails = emptyArray, alternativeNames = emptyArray, project, onMutate } = props
+  const { _id, name, emails = emptyArray, alternativeNames = emptyArray, project, onMutate } = props
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
   const confirmDeleteHandler = () => {
-    deleteGitStaffApi(project.name, name).then(() => void onMutate?.())
+    deleteGitStaffApi(project._id, _id).then(() => void onMutate?.())
   }
 
   return (

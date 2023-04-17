@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react'
 export interface IGitStaffDialogProps extends IProps {
   open?: boolean
   onOpenChange?(isOpen: boolean): void
-  onSubmit?(gitStaff: IGitStaff): void
+  onSubmit?(gitStaff: NoId<IGitStaff>): void
 }
 
 export default function GitStaffDialog(props: IGitStaffDialogProps) {

@@ -7,7 +7,7 @@
  */
 type GitRepoStatusType = 'init' | 'ready' | 'pending' | 'error'
 
-interface IGitCommit {
+interface IGitCommit extends IWithId {
   hash: string
   date: string
   message: string
@@ -16,7 +16,7 @@ interface IGitCommit {
   refs?: string
 }
 
-interface IGitRepo {
+interface IGitRepo extends IWithId {
   name: string
   url: string
   status: GitRepoStatusType
@@ -25,7 +25,7 @@ interface IGitRepo {
   recentCommits: IGitCommit[]
 }
 
-interface IGitStaff {
+interface IGitStaff extends IWithId {
   name: string
   emails: string[]
   alternativeNames: string[]
