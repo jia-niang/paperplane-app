@@ -9713,6 +9713,11 @@ use-sync-external-store@^1.2.0:
   resolved "https://registry.npmmirror.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
   integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
 
+use-upgrade@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.npmmirror.com/use-upgrade/-/use-upgrade-0.0.1.tgz#c1a4bccad3f611bcf0dc035452c45a1aee5904f8"
+  integrity sha512-5ImzwqITtu1XYBwKB/NCYkeCaggQ8h/HNXVvZ8dxR1Gq07q3hfh+2Ad7nrJ8jv/TZJw/xnMbSPkV7LMGpSNOkQ==
+
 util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.npmmirror.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"

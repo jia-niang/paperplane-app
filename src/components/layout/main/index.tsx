@@ -1,16 +1,18 @@
 import HomeIcon from '@mui/icons-material/Home'
 import { Box, Button, Container, Divider, Grid, IconButton, Typography } from '@mui/material'
 import { Outlet, useNavigate } from 'react-router-dom'
+import { useUpgrade } from 'use-upgrade'
 
 /** 全站主 Layout */
 export default function MainLayout(): RC {
   const navigate = useNavigate()
+  const hasNewVersion = useUpgrade()
 
   return (
     <Container maxWidth="lg" className="tools-layout">
       <Grid height={80} container direction="row" justifyContent="center" alignItems="center">
         <Typography onClick={() => void navigate('/')} style={{ cursor: 'pointer' }} variant="h4">
-          Paperplane 🌠 Web App
+          Paperplane 🌠 Web App {hasNewVersion ? <span>NEW!!</span> : null}
         </Typography>
       </Grid>
 
