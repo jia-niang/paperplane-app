@@ -6,12 +6,15 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import zhCNDateFns from 'date-fns/locale/zh-CN'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { startCheckUpgrade } from 'use-upgrade'
 
 import RouterEntry from './router'
 
 import '@/global/app.scss'
 
 const theme = createTheme(zhCN)
+
+startCheckUpgrade()
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
