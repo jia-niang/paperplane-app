@@ -26,12 +26,6 @@ const toolsList: IProjectInfo[] = [
     disabled: true,
   },
   {
-    title: '医脉同道助手',
-    desc: '查询手机号和 ID、一键注销账号、拉取 IM 记录和会话等功能。',
-    link: '/tools/ymtd',
-    disabled: true,
-  },
-  {
     title: '短网址',
     desc: 'paperplane.cc 域名下的短网址功能',
     link: '/tools/dwz',
