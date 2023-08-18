@@ -9,11 +9,13 @@ import ReactDOM from 'react-dom/client'
 import { startCheckUpgrade } from 'use-upgrade'
 
 import RouterEntry from './router'
+import { ensureClientId } from './utils/clientId'
 
 import '@/global/app.scss'
 
 const theme = createTheme(zhCN)
 
+ensureClientId()
 startCheckUpgrade()
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
