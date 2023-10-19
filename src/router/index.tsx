@@ -4,11 +4,11 @@ import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-d
 import MainLayout from '@/components/layout/main'
 import HomePage from '@/pages'
 
-const ToolsPage = loadable(() => import('@/pages/tools'))
-const DingtalkPage = loadable(() => import('@/pages/tools/dingtalk'))
-const WeeklyPage = loadable(() => import('@/pages/tools/weekly'))
-const GPTChatPage = loadable(() => import('@/pages/tools/gptchat'))
-const GitPage = loadable(() => import('@/pages/tools/git'))
+const ToolsPage = loadable(() => import(/* webpackPrefetch: true */ '@/pages/tools'))
+const DingtalkPage = loadable(() => import(/* webpackPrefetch: true */ '@/pages/tools/dingtalk'))
+const WeeklyPage = loadable(() => import(/* webpackPrefetch: true */ '@/pages/tools/weekly'))
+const GPTChatPage = loadable(() => import(/* webpackPrefetch: true */ '@/pages/tools/gptchat'))
+const GitPage = loadable(() => import(/* webpackPrefetch: true */ '@/pages/tools/git'))
 
 const routerConfig: RouteObject[] = [
   {
