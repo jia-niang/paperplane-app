@@ -1,8 +1,10 @@
 import store from 'store'
 
+import { SK_CLIENT_ID } from './storageKeys'
+
 function uuid(len: number = 8): string {
   const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
-  const uuid = []
+  const uuid: string[] = []
   const radix = 16
 
   for (let i = 0; i < len; i++) {
@@ -11,8 +13,6 @@ function uuid(len: number = 8): string {
 
   return uuid.join('')
 }
-
-export const SK_CLIENT_ID = 'cc.paperplane.app.cid'
 
 /** 获取客户端 ID */
 export function ensureClientId() {

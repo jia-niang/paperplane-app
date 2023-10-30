@@ -1,48 +1,41 @@
 const {
   override,
   overrideDevServer,
-  addBabelPlugins,
   addWebpackAlias,
-  fixBabelImports,
   addWebpackModuleRule,
   addBabelPlugin,
+  addLessLoader,
+  addBabelPreset,
 } = require('customize-cra')
 
 module.exports = {
   webpack: override(
-    addBabelPlugins(['@emotion']),
-
     addWebpackAlias({ '@': 'src/' }),
 
-    fixBabelImports('mui-core', {
-      libraryName: '@mui/core',
-      libraryDirectory: '',
-      camel2DashComponentName: false,
+    addWebpackModuleRule({
+      test: /\.s[ac]ss$/i,
+      use: [
+        'style-loader',
+        'css-loader',
+        {
+          loader: 'sass-loader',
+          options: { additionalData: '@import "~@/styles/variables.scss";' },
+        },
+      ],
     }),
 
-    fixBabelImports('mui-icon', {
-      libraryName: '@mui/icon',
-      libraryDirectory: '',
-      camel2DashComponentName: false,
-    }),
-
-    fixBabelImports('mui-lab', {
-      libraryName: '@mui/lab',
-      libraryDirectory: '',
-      camel2DashComponentName: false,
+    addLessLoader({
+      lessOptions: {
+        globalVars: {},
+        modifyVars: {},
+      },
     }),
 
     addBabelPlugin(['lodash']),
 
-    addBabelPlugin([
-      'babel-plugin-direct-import',
-      { modules: ['@mui/material', '@mui/icons-material'] },
-    ]),
+    addBabelPlugin(['@emotion']),
 
-    addWebpackModuleRule({
-      test: /\.scss$/,
-      use: ['style-loader', 'css-loader', 'sass-loader'],
-    })
+    addBabelPreset(['@emotion/babel-preset-css-prop'])
   ),
 
   devServer: overrideDevServer(devServerConfig => ({

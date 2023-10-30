@@ -1,36 +1,29 @@
-import CssBaseline from '@mui/material/CssBaseline'
-import { zhCN } from '@mui/material/locale'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { LocalizationProvider, zhCN as zhCNXDateLocal } from '@mui/x-date-pickers'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
-import zhCNDateFns from 'date-fns/locale/zh-CN'
+import { setDefaultOptions } from 'date-fns'
+import { zhCN } from 'date-fns/locale'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { startCheckUpgrade } from 'use-upgrade'
+import { ConfigProvider, merge } from 'tdesign-react'
+import 'tdesign-react/dist/reset.css'
+import zhConfig from 'tdesign-react/es/locale/zh_CN'
 
 import RouterEntry from './router'
 import { ensureClientId } from './utils/clientId'
 
-import '@/global/app.scss'
+import '@/styles/global.scss'
+import '@/styles/theme.scss'
 
-const theme = createTheme(zhCN)
+setDefaultOptions({ locale: zhCN })
 
 ensureClientId()
-startCheckUpgrade()
+
+const globalConfig = merge(zhConfig, {})
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
 root.render(
   <React.Fragment>
-    <CssBaseline />
-    <LocalizationProvider
-      dateAdapter={AdapterDateFns}
-      adapterLocale={zhCNDateFns}
-      localeText={zhCNXDateLocal.components.MuiLocalizationProvider.defaultProps.localeText}
-    >
-      <ThemeProvider theme={theme}>
-        <RouterEntry />
-      </ThemeProvider>
-    </LocalizationProvider>
+    <ConfigProvider globalConfig={globalConfig}>
+      <RouterEntry />
+    </ConfigProvider>
   </React.Fragment>
 )

@@ -1,32 +1,54 @@
-import loadable from '@loadable/component'
-import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom'
+import { pick } from 'lodash'
+import { ReactNode } from 'react'
+import { createBrowserRouter, Navigate, IndexRouteObject, RouterProvider } from 'react-router-dom'
 
-import MainLayout from '@/components/layout/main'
-import HomePage from '@/pages'
+import MainLayout from '@/components/layout/MainLayout'
+import PageLoading from '@/components/loading/PageLoading'
+import Page404 from '@/pages/fallbacks/page-404'
+import HomePage from '@/pages/home'
+import { traverseTree } from '@/utils/traverseTree'
 
-const ToolsPage = loadable(() => import(/* webpackPrefetch: true */ '@/pages/tools'))
-const DingtalkPage = loadable(() => import(/* webpackPrefetch: true */ '@/pages/tools/dingtalk'))
-const WeeklyPage = loadable(() => import(/* webpackPrefetch: true */ '@/pages/tools/weekly'))
-const GPTChatPage = loadable(() => import(/* webpackPrefetch: true */ '@/pages/tools/gptchat'))
-const GitPage = loadable(() => import(/* webpackPrefetch: true */ '@/pages/tools/git'))
+import lazy from './lazy'
 
-const routerConfig: RouteObject[] = [
+export type RouterHandleType = {
+  /** 网页标题 title */
+  title?: string
+
+  /** 覆盖面包屑中使用的标题 */
+  breadcrumbTitle?: ReactNode
+}
+
+export type RouteObjectType = Omit<IndexRouteObject, 'index' | 'children' | 'handle'> &
+  RouterHandleType & {
+    children?: RouteObjectType[]
+    index?: any
+    handle?: RouterHandleType
+  }
+
+export const routerConfig: RouteObjectType[] = [
   {
     element: <MainLayout />,
     children: [
-      { path: '/', element: <HomePage /> },
+      { index: true, element: <HomePage /> },
 
-      { path: '/tools', element: <ToolsPage /> },
-      { path: '/tools/dingtalk', element: <DingtalkPage /> },
-      { path: '/tools/weekly', element: <WeeklyPage /> },
-      { path: '/tools/gptchat', element: <GPTChatPage /> },
-      { path: '/tools/git', element: <GitPage /> },
+      {
+        path: 'gpt',
+        title: 'GPT 问答',
+        element: lazy(() => import(/* webpackPrefetch: true */ '@/pages/gpt')),
+      },
+
+      { path: '404', title: '页面不见了', element: <Page404 /> },
+      { path: '*', element: <Navigate to="/404" replace /> },
     ],
   },
 ]
 
-const router = createBrowserRouter(routerConfig, { basename: process.env.PUBLIC_URL })
+traverseTree(routerConfig, item => {
+  item.handle = { ...pick(item, ['title', 'breadcrumbTitle']), ...item.handle }
+})
+
+export const router = createBrowserRouter(routerConfig, { basename: process.env.PUBLIC_URL })
 
 export default function RouterEntry(): RC {
-  return <RouterProvider router={router} />
+  return <RouterProvider router={router} fallbackElement={<PageLoading />} />
 }
