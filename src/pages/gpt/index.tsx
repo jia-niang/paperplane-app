@@ -184,7 +184,7 @@ export default function GPTPage(): RC {
               onChange={setText}
               value={text}
               onKeydown={(value, { e }) => {
-                if (e.code === 'Enter' && e.ctrlKey) {
+                if (e.code === 'Enter' && ((isMacOS && e.metaKey) || (!isMacOS && e.ctrlKey))) {
                   submitText(value)
                 }
               }}
