@@ -42,20 +42,8 @@ export default function PageHeader(): RC {
 
   return (
     <header>
-      <div
-        css={css`
-          width: 960px;
-          margin: 0 auto;
-          padding-bottom: 30px;
-        `}
-      >
-        <div
-          css={css`
-            display: flex;
-            align-items: center;
-            height: 60px;
-          `}
-        >
+      <div className="mx-auto w-[960px] pb-8">
+        <div className="flex h-[60px] items-center">
           <Space>
             <Link size="large" theme="primary" href="/">
               工具箱
