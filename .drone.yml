@@ -6,7 +6,7 @@ workspace:
 
 steps:
   - name: build
-    image: node:14
+    image: node:14.21.3
     volumes:
       - name: npmcache
         path: /usr/local/share/.cache/yarn
