@@ -84,6 +84,21 @@ export default function GPTPage(): RC {
       return Markdown ? (
         <Markdown
           css={css`
+            p {
+              margin: 1em 0;
+            }
+
+            ul,
+            ol {
+              list-style: disc;
+              margin-left: 20px;
+              margin-bottom: 1em;
+
+              li {
+                margin: 0.5em 0;
+              }
+            }
+
             p > code,
             li > code {
               background: #f4f4f4;
