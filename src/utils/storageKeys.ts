@@ -20,3 +20,6 @@ export const SK_SETTING = prefix`.setting`
 
 /** GPT 提问记录 */
 export const SK_GPT_RECORDS = prefix`.gpt-record`
+
+/** 机器人配置 */
+export const SK_ROBOT_CONFIG = prefix`.robot-config`

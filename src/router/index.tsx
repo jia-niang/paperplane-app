@@ -37,6 +37,12 @@ export const routerConfig: RouteObjectType[] = [
         element: lazy(() => import(/* webpackPrefetch: true */ '@/pages/gpt')),
       },
 
+      {
+        path: 'robot',
+        title: '消息机器人',
+        element: lazy(() => import(/* webpackPrefetch: true */ '@/pages/robot')),
+      },
+
       { path: '404', title: '页面不见了', element: <Page404 /> },
       { path: '*', element: <Navigate to="/404" replace /> },
     ],
