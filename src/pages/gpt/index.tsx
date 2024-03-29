@@ -35,7 +35,7 @@ import { gptMultipleChatApi } from '@/services/ai'
 import { useGloalSetting } from '@/services/globalSetting'
 import { SK_GPT_RECORDS } from '@/utils/storageKeys'
 
-import '@/styles/fonts/font-sourec-code/index.scss'
+import '@/styles/fonts/font-source-code/index.scss'
 import '@/styles/highlight.scss'
 
 const { TabPanel } = Tabs
