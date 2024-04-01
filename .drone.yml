@@ -9,10 +9,9 @@ steps:
     image: node:14.21.3
     volumes:
       - name: yarncache
-        path: /usr/local/share/.cache/yarn
+        path: /home/node/.cache/yarn
     commands:
-      - yarn config set registry https://registry.npmmirror.com
-      - yarn
+      - yarn --registry=https://registry.yarnpkg.com
       - yarn build
     environment:
       CI: false
