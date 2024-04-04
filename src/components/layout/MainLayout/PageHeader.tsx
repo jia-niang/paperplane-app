@@ -2,7 +2,7 @@ import { css } from '@emotion/react'
 import 'atropos/css'
 import Atropos from 'atropos/react'
 import { uniqBy } from 'lodash'
-import { useLocation, useMatches } from 'react-router-dom'
+import { useLocation, useMatches, useNavigate } from 'react-router-dom'
 import { HomeIcon } from 'tdesign-icons-react'
 import { Breadcrumb, Link, Space } from 'tdesign-react'
 
@@ -16,6 +16,9 @@ const currentYear = new Date().getFullYear()
 
 export default function PageHeader(): RC {
   const location = useLocation()
+  const navigate = useNavigate()
+
+  const routerForBreadcrumbItem = { push: navigate }
 
   const currentRoutes = uniqBy(useMatches(), 'pathname')
 
@@ -25,14 +28,21 @@ export default function PageHeader(): RC {
     <Breadcrumb maxItemWidth="120px">
       {currentRoutes.map(route => {
         if (route.pathname === '/') {
-          return <BreadcrumbItem key={route.id} icon={<HomeIcon />} href="/"></BreadcrumbItem>
+          return (
+            <BreadcrumbItem
+              key={route.id}
+              icon={<HomeIcon />}
+              router={routerForBreadcrumbItem}
+              to="/"
+            ></BreadcrumbItem>
+          )
         }
 
         const handle = route.handle as RouterHandleType | undefined
         const title = handle?.breadcrumbTitle || handle?.title || '(未知)'
 
         return (
-          <BreadcrumbItem key={route.id} href={route.pathname}>
+          <BreadcrumbItem key={route.id} router={routerForBreadcrumbItem} to={route.pathname}>
             {title}
           </BreadcrumbItem>
         )
