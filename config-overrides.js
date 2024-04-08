@@ -61,7 +61,7 @@ module.exports = {
 
     process.env.NODE_ENV === 'production' && process.env.COS_SECRET_ID && process.env.COS_SECRET_KEY
       ? function setPublicPath(config) {
-          config.output.publicPath = '//cdn.paperplane.cc/paperplane-app'
+          config.output.publicPath = '//cdn.paperplane.cc/paperplane-app/'
 
           return config
         }
