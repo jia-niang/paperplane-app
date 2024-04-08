@@ -55,13 +55,16 @@ module.exports = {
             s3UploadOptions: {
               Bucket: 'paperplane-cdn-1253277322',
             },
-            cdnizerOptions: {
-              defaultCDNBase: 'https://cdn.paperplane.cc/paperplane-app',
-              files: ['**/*.{js,css,gif,png,jpg,jpeg,bmp,gif,webp}'],
-            },
-            progress: false,
           })
         )
+      : noop,
+
+    process.env.NODE_ENV === 'production' && process.env.COS_SECRET_ID && process.env.COS_SECRET_KEY
+      ? function setPublicPath(config) {
+          config.output.publicPath = '//cdn.paperplane.cc/paperplane-app'
+
+          return config
+        }
       : noop
   ),
 
