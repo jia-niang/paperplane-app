@@ -40,7 +40,7 @@ module.exports = {
 
     addBabelPreset(['@emotion/babel-preset-css-prop']),
 
-    process.env.COS_SECRET_ID && process.env.COS_SECRET_KEY
+    process.env.NODE_ENV === 'production' && process.env.COS_SECRET_ID && process.env.COS_SECRET_KEY
       ? addWebpackPlugin(
           new S3Plugin({
             exclude: /.*\.html$/,
@@ -57,6 +57,7 @@ module.exports = {
             },
             cdnizerOptions: {
               defaultCDNBase: 'https://cdn.paperplane.cc/paperplane-app',
+              files: ['**/*.{js,css,gif,png,jpg,jpeg,bmp,gif,webp}'],
             },
             progress: false,
           })
