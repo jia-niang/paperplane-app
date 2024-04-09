@@ -45,8 +45,8 @@ module.exports = {
       new HtmlWebpackTagsPlugin({
         usePublicPath: false,
         links: [
-          { path: 'https://cdn.paperplane.cc', attributes: { rel: 'dns-prefetch' } },
-          { path: 'https://cdn.paperplane.cc', attributes: { rel: 'preconnect' } },
+          { path: 'https://static.paperplane.cc', attributes: { rel: 'dns-prefetch' } },
+          { path: 'https://static.paperplane.cc', attributes: { rel: 'preconnect' } },
         ],
       })
     ),
@@ -72,7 +72,7 @@ module.exports = {
 
     process.env.NODE_ENV === 'production' && process.env.COS_SECRET_ID && process.env.COS_SECRET_KEY
       ? function setPublicPath(config) {
-          config.output.publicPath = '//cdn.paperplane.cc/paperplane-app/'
+          config.output.publicPath = '//static.paperplane.cc/paperplane-app/'
 
           return config
         }
