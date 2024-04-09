@@ -86,6 +86,13 @@ export default function GPTPage(): RC {
           css={css`
             p {
               margin: 1em 0;
+
+              &:first-child {
+                margin-top: 0;
+              }
+              &:last-child {
+                margin-bottom: 0;
+              }
             }
 
             ul,
@@ -107,10 +114,25 @@ export default function GPTPage(): RC {
             }
 
             pre {
-              overflow-x: scroll;
               border-radius: 6px;
               padding: 10px 12px;
               background: #f2f2f3;
+              overflow-x: auto;
+
+              &::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+                background-color: #f9f9f9;
+                border-radius: 0 0 3px 3px;
+              }
+              &::-webkit-scrollbar-thumb {
+                background-color: rgba(131, 128, 128, 0.3);
+                border-radius: 0 0 3px 3px;
+              }
+              &::-webkit-scrollbar-track {
+                background-color: transparent;
+                border-radius: 0 0 3px 3px;
+              }
             }
           `}
           children={children}
@@ -377,15 +399,14 @@ export default function GPTPage(): RC {
                       .t-tabs__content {
                         background-color: #fff;
                         border-radius: 4px 0 4px 4px;
-                        padding: 0 12px;
+                        padding: 12px 12px;
                       }
                       .t-tabs__nav--card {
                         overflow: hidden;
                         border-radius: 6px 6px 0 0;
                       }
-                      .t-tabs__nav--card.t-tabs__nav-item:not(.t-is-disabled):not(
-                          .t-is-active
-                        ):hover {
+                      .t-tabs__nav--card.t-tabs__nav-item:not(.t-is-disabled)
+                        :not(.t-is-active):hover {
                         color: var(--brand-main);
                       }
                     `}
