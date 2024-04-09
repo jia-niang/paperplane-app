@@ -9,6 +9,7 @@ const {
   addWebpackPlugin,
 } = require('customize-cra')
 const S3Plugin = require('webpack-s3-plugin')
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin')
 const noop = require('lodash/identity')
 
 module.exports = {
@@ -39,6 +40,16 @@ module.exports = {
     addBabelPlugin(['@emotion']),
 
     addBabelPreset(['@emotion/babel-preset-css-prop']),
+
+    addWebpackPlugin(
+      new HtmlWebpackTagsPlugin({
+        usePublicPath: false,
+        links: [
+          { path: 'https://cdn.paperplane.cc', attributes: { rel: 'dns-prefetch' } },
+          { path: 'https://cdn.paperplane.cc', attributes: { rel: 'preconnect' } },
+        ],
+      })
+    ),
 
     process.env.NODE_ENV === 'production' && process.env.COS_SECRET_ID && process.env.COS_SECRET_KEY
       ? addWebpackPlugin(
