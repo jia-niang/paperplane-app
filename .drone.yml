@@ -9,7 +9,7 @@ steps:
     image: node:14.21.3
     volumes:
       - name: yarncache
-        path: /home/node/.cache/yarn
+        path: /usr/local/share/.cache/yarn
     commands:
       - yarn --registry=https://registry.yarnpkg.com
       - yarn build
