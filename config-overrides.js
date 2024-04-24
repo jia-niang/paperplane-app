@@ -4,7 +4,6 @@ const {
   addWebpackAlias,
   addWebpackModuleRule,
   addBabelPlugin,
-  addLessLoader,
   addBabelPreset,
   addWebpackPlugin,
 } = require('customize-cra')
@@ -21,6 +20,7 @@ module.exports = {
       use: [
         'style-loader',
         'css-loader',
+        { loader: 'resolve-url-loader', options: {} },
         {
           loader: 'sass-loader',
           options: { additionalData: '@import "~@/styles/variables.scss";' },
@@ -28,11 +28,9 @@ module.exports = {
       ],
     }),
 
-    addLessLoader({
-      lessOptions: {
-        globalVars: {},
-        modifyVars: {},
-      },
+    addWebpackModuleRule({
+      test: /\.less$/i,
+      use: ['style-loader', 'css-loader', 'less-loader'],
     }),
 
     addBabelPlugin(['lodash']),
