@@ -21,6 +21,7 @@ steps:
         from_secret: COS_SECRET_KEY
     commands:
       - docker compose up --build
+      - docker rm paperplane-app
 
   - name: deploy
     image: ubuntu:22.04
