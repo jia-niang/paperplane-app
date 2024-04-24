@@ -5,14 +5,13 @@ workspace:
   path: /home/node/app
 
 steps:
-  - name: build
-    image: node:14.21.3
+  - name: build-image
+    image: docker:dind
     volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
       - name: yarncache
-        path: /home/node/.cache/yarn
-    commands:
-      - yarn --registry=https://registry.yarnpkg.com
-      - yarn build
+        path: /usr/local/share/.cache/yarn
     environment:
       CI: false
       GENERATE_SOURCEMAP: false
@@ -20,6 +19,8 @@ steps:
         from_secret: COS_SECRET_ID
       COS_SECRET_KEY:
         from_secret: COS_SECRET_KEY
+    commands:
+      - docker compose up --build
 
   - name: deploy
     image: ubuntu:22.04

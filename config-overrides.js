@@ -20,17 +20,12 @@ module.exports = {
       use: [
         'style-loader',
         'css-loader',
-        // { loader: 'resolve-url-loader', options: {} },
+        'resolve-url-loader',
         {
           loader: 'sass-loader',
           options: { additionalData: '@import "~@/styles/variables.scss";' },
         },
       ],
-    }),
-
-    addWebpackModuleRule({
-      test: /\.less$/i,
-      use: ['style-loader', 'css-loader', 'less-loader'],
     }),
 
     addBabelPlugin(['lodash']),
