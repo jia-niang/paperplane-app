@@ -20,10 +20,10 @@ module.exports = {
       use: [
         'style-loader',
         'css-loader',
-        'resolve-url-loader',
+        { loader: 'resolve-url-loader', options: {} },
         {
           loader: 'sass-loader',
-          options: { additionalData: '@import "~@/styles/variables.scss";' },
+          options: { sourceMap: true, additionalData: '@import "~@/styles/variables.scss";' },
         },
       ],
     }),
