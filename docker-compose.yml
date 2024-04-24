@@ -1,8 +1,0 @@
-services:
-  paperplane-app:
-    build: .
-    image: docker.p01.cc/buildenv/paperplane-app:latest
-    container_name: paperplane-app
-    volumes:
-      - ./:/home/node/app/
-    command: yarn build
