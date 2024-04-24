@@ -33,6 +33,9 @@ steps:
       - cp -rf ./dist/* /webroot/paperplane-app/
 
 volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
   - name: webroot
     host:
       path: /root/www
