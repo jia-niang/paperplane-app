@@ -20,7 +20,7 @@ module.exports = {
       use: [
         'style-loader',
         'css-loader',
-        { loader: 'resolve-url-loader', options: {} },
+        // { loader: 'resolve-url-loader', options: {} },
         {
           loader: 'sass-loader',
           options: { additionalData: '@import "~@/styles/variables.scss";' },
