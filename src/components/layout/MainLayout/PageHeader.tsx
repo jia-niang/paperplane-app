@@ -64,8 +64,13 @@ export default function PageHeader(): RC {
             <Link size="large" theme="default" href="https://tl.paperplane.cc/" target="_blank">
               动态
             </Link>
-            <Link size="large" theme="default" href="https://share.paperplane.cc/" target="_blank">
-              技术分享
+            <Link
+              size="large"
+              theme="default"
+              href="https://careerintlinc-tech-share.paperplane.cc/"
+              target="_blank"
+            >
+              CITech 技术分享
             </Link>
             <Link
               size="large"
