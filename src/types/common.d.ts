@@ -26,30 +26,6 @@ interface IPaginated<TData = any> {
 
 type TimestampType = number
 
-/** 带有修订信息的类型 */
-interface IModifyInfo {
-  createTime: TimestampType
-  updateTime: TimestampType
-}
-
-interface IWithModify extends IModifyInfo {}
-
-/** 自类型中移除修订信息字段 */
-type NoModify<T extends IModifyInfo> = Omit<T, keyof IModifyInfo>
-
-type IdType = string
-
-/** 带有 _id 的类型 */
-interface IWithId {
-  _id: IdType
-}
-
-/** 自类型中移除 _id 类型 */
-type NoId<T extends IWithId> = Omit<T, keyof IWithId>
-
-/** 草稿类型，没有任何 _id 和修订信息 */
-type Draft<T> = Omit<T, keyof IModifyInfo & IWithId>
-
 /** 带有客户端 ID 的类型 */
 interface IWithClientId {
   clientId?: string
