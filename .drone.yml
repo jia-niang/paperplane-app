@@ -28,7 +28,6 @@ steps:
         path: /webroot
     commands:
       - mkdir -p /webroot/paperplane-app/
-      - rm -rf /webroot/paperplane-app/*
       - cp -rf ./dist/* /webroot/paperplane-app/
 
 volumes:
