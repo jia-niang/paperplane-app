@@ -70,7 +70,7 @@ export default function PageHeader(): RC {
               href="https://careerintlinc-tech-share.paperplane.cc/"
               target="_blank"
             >
-              CITech 技术分享
+              CITech
             </Link>
             <Link
               size="large"
