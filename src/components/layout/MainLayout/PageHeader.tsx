@@ -67,18 +67,10 @@ export default function PageHeader(): RC {
             <Link
               size="large"
               theme="default"
-              href="https://careerintlinc-tech-share.paperplane.cc/"
-              target="_blank"
-            >
-              CITech
-            </Link>
-            <Link
-              size="large"
-              theme="default"
               href="https://git.paperplane.cc/jia-niang/paperplane-app"
               target="_blank"
             >
-              Gitea
+              源码
             </Link>
             <Link
               size="large"
@@ -86,7 +78,10 @@ export default function PageHeader(): RC {
               href="https://drone.paperplane.cc/jia-niang/paperplane-app"
               target="_blank"
             >
-              流水线
+              CI/CD
+            </Link>
+            <Link size="large" theme="default" href="https://paperplane.cc/a" target="_blank">
+              全站导航
             </Link>
           </Space>
 
