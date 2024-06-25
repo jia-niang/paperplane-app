@@ -1,5 +1,3 @@
-import createCache from '@emotion/cache'
-import { CacheProvider } from '@emotion/react'
 import { setDefaultOptions } from 'date-fns'
 import { zhCN } from 'date-fns/locale'
 import ReactDOM from 'react-dom/client'
@@ -22,15 +20,8 @@ const globalConfig = merge(zhConfig, {})
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
-const emotionCacheConfig = createCache({
-  key: 'paperplane-app-default',
-  nonce: 'emotion',
-})
-
 root.render(
   <ConfigProvider globalConfig={globalConfig}>
-    <CacheProvider value={emotionCacheConfig}>
-      <RouterEntry />
-    </CacheProvider>
+    <RouterEntry />
   </ConfigProvider>
 )
