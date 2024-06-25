@@ -65,7 +65,7 @@ module.exports = {
     addWebpackPlugin(
       new CspHtmlWebpackPlugin({
         'script-src': ["'strict-dynamic'"],
-        'style-src': ["'self'", "'nonce-emotion'"],
+        'style-src': ["'self'", "'unsafe-inline'", "'nonce-emotion'"],
       })
     )
   ),
