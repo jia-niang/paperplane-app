@@ -63,14 +63,10 @@ module.exports = {
       : noop,
 
     addWebpackPlugin(
-      new CspHtmlWebpackPlugin(
-        { 'script-src': ["'strict-dynamic'"] },
-        {
-          primeReactEnabled: false,
-          hashEnabled: { 'style-src': false },
-          nonceEnabled: { 'style-src': false },
-        }
-      )
+      new CspHtmlWebpackPlugin({
+        'script-src': ["'strict-dynamic'"],
+        'style-src': ["'self'", "'nonce-emotion'"],
+      })
     )
   ),
 
