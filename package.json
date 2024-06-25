@@ -12,6 +12,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.4",
     "@loadable/component": "^5.15.3",
+    "@melloware/csp-webpack-plugin": "^6.0.4",
     "ahooks": "^3.7.1",
     "atropos": "^2.0.2",
     "axios": "^1.1.3",

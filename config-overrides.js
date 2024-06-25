@@ -8,7 +8,7 @@ const {
   addWebpackPlugin,
 } = require('customize-cra')
 const S3Plugin = require('webpack-s3-plugin')
-const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin')
+const CspHtmlWebpackPlugin = require('@melloware/csp-webpack-plugin')
 const noop = require('lodash/identity')
 
 module.exports = {
@@ -34,16 +34,6 @@ module.exports = {
 
     addBabelPreset(['@emotion/babel-preset-css-prop']),
 
-    addWebpackPlugin(
-      new HtmlWebpackTagsPlugin({
-        usePublicPath: false,
-        links: [
-          { path: 'https://cdn.paperplane.cc', attributes: { rel: 'dns-prefetch' } },
-          { path: 'https://cdn.paperplane.cc', attributes: { rel: 'preconnect' } },
-        ],
-      })
-    ),
-
     process.env.NODE_ENV === 'production' && process.env.COS_SECRET_ID && process.env.COS_SECRET_KEY
       ? addWebpackPlugin(
           new S3Plugin({
@@ -66,10 +56,18 @@ module.exports = {
     process.env.NODE_ENV === 'production' && process.env.COS_SECRET_ID && process.env.COS_SECRET_KEY
       ? function setPublicPath(config) {
           config.output.publicPath = '//cdn.paperplane.cc/paperplane-app/'
+          config.output.crossOriginLoading = 'anonymous'
 
           return config
         }
-      : noop
+      : noop,
+
+    addWebpackPlugin(
+      new CspHtmlWebpackPlugin({
+        'script-src': ["'strict-dynamic'"],
+        'style-src': ["'strict-dynamic'"],
+      })
+    )
   ),
 
   devServer: overrideDevServer(devServerConfig => ({
