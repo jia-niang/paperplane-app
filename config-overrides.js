@@ -65,7 +65,7 @@ module.exports = {
     addWebpackPlugin(
       new CspHtmlWebpackPlugin({
         'script-src': ["'strict-dynamic'"],
-        'style-src-elem': "'self' 'unsafe-inline' 'unsafe-eval'",
+        'style-src': "'self' 'unsafe-inline' 'unsafe-eval' *.paperplane.cc",
       })
     )
   ),
