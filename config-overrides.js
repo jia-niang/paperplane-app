@@ -62,12 +62,7 @@ module.exports = {
         }
       : noop,
 
-    addWebpackPlugin(
-      new CspHtmlWebpackPlugin({
-        'script-src': ["'strict-dynamic'"],
-        'style-src': ["'strict-dynamic'"],
-      })
-    )
+    addWebpackPlugin(new CspHtmlWebpackPlugin({ 'script-src': ["'strict-dynamic'"] }))
   ),
 
   devServer: overrideDevServer(devServerConfig => ({
