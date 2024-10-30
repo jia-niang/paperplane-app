@@ -62,19 +62,21 @@ module.exports = {
         }
       : noop,
 
-    addWebpackPlugin(
-      new CspHtmlWebpackPlugin(
-        {
-          'script-src': ["'strict-dynamic'"],
-          'style-src': "'self' 'unsafe-inline' 'unsafe-eval' *.paperplane.cc",
-        },
-        {
-          primeReactEnabled: false,
-          hashEnabled: { 'style-src': false },
-          nonceEnabled: { 'style-src': false },
-        }
-      )
-    )
+    process.env.NODE_ENV === 'production' && process.env.COS_SECRET_ID && process.env.COS_SECRET_KEY
+      ? addWebpackPlugin(
+          new CspHtmlWebpackPlugin(
+            {
+              'script-src': ["'strict-dynamic'"],
+              'style-src': "'self' 'unsafe-inline' 'unsafe-eval' *.paperplane.cc",
+            },
+            {
+              primeReactEnabled: false,
+              hashEnabled: { 'style-src': false },
+              nonceEnabled: { 'style-src': false },
+            }
+          )
+        )
+      : noop
   ),
 
   devServer: overrideDevServer(devServerConfig => ({
