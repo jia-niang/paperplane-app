@@ -211,7 +211,7 @@ export default function GPTPage(): RC {
           <Space css={{ width: '100%' }} size="small" direction="vertical">
             <div className="pa-text pa-vc">
               向 AI 提问
-              <Tooltip content="纸飞机不会记录/存储任何提问/回答，前后端代码均为开源；提问历史仅储存在浏览器缓存中">
+              <Tooltip content="代码均已开源，后台不会记录提问与回答；本工具不支持上下文功能，提问历史仅储存在浏览器缓存中">
                 <InfoCircleIcon css={{ margin: '0 4px', color: 'var(--td-gray-color-5)' }} />
               </Tooltip>
               ：
@@ -365,7 +365,7 @@ export default function GPTPage(): RC {
                     `}
                   >
                     AI 的回答
-                    <Tooltip content="目前基于 OpenAI ChatGPT 3.5">
+                    <Tooltip content="目前基于 Azure OpenAI GPT-4o">
                       <InfoCircleIcon css={{ margin: '0 4px', color: 'var(--td-gray-color-5)' }} />
                     </Tooltip>
                     ：

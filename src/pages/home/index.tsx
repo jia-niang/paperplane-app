@@ -22,7 +22,7 @@ export default function HomePage(): RC {
     <PageLayout>
       <div className="mb-[-60px] mr-[-60px]">
         <HomeEntryCard iconImage={openAiIcon} bgColor="#9B3DB3" bgImage={openAiBg} href="/gpt">
-          <div className="text-decoration-none ml-[18px] text-[40px] text-white">GPT-3.5</div>
+          <div className="text-decoration-none ml-[18px] text-[40px] text-white">GPT-4o</div>
         </HomeEntryCard>
 
         <HomeEntryCard iconImage={robotIcon} bgColor="#E4419D" bgImage={robotBg} href="/robot">
