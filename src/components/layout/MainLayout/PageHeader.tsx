@@ -22,7 +22,7 @@ export default function PageHeader(): RC {
 
   const currentRoutes = uniqBy(useMatches(), 'pathname')
 
-  const homepageCopyright = `纸飞机出品 © ${currentYear}`
+  const homepageCopyright = `PaperPlane © ${currentYear}`
 
   const breadcrumb = (
     <Breadcrumb maxItemWidth="120px">
